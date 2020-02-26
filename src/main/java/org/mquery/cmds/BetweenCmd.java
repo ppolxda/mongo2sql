@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 
 import org.mquery.MongoCmd;
 import org.mquery.MongoDefine;
+import org.mquery.SqlParames;
 
 public class BetweenCmd implements MongoCmd {
 
@@ -27,14 +28,16 @@ public class BetweenCmd implements MongoCmd {
         return MongoDefine.C_BETWEEN;
     }
 
-    public String evaluate() {
-        return "";
+    @Override
+    public String evaluate(SqlParames p) {
+        return p.fmtField(this.field).concat(this.getJoinName()).concat(p.fmtValue(this.data.getString(0)))
+                .concat(" and ").concat(p.fmtValue(this.data.getString(1)));
     }
 
     @Override
     public String str() {
-        return this.cf.fmtField(this.field).concat(this.getJoinName()).concat(this.cf.fmtValue(this.data.getString(0)))
-                .concat(" and ").concat(this.cf.fmtValue(this.data.getString(1)));
+        SqlParames p = this.cf.getSqlDefault();
+        return this.evaluate(p);
     }
 
 }

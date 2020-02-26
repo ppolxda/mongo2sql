@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import org.mquery.MongoCmd;
 import org.mquery.MongoDefine;
+import org.mquery.SqlParames;
 
 public class AndCmd implements MongoCmd {
 
@@ -31,8 +32,12 @@ public class AndCmd implements MongoCmd {
         return MongoDefine.LOGICAL_AND;
     }
 
-    public String evaluate() {
-        return "";
+    public String evaluate(SqlParames p) {
+        List<MongoCmd> xcmds = this.cmds();
+        String[] datas = xcmds.stream().map((MongoCmd obj) -> {
+            return obj.evaluate(p);
+        }).toArray(String[]::new);
+        return "(".concat(String.join(this.getJoinKey(), Arrays.asList(datas))).concat(")");
     }
 
     public List<MongoCmd> cmds() {

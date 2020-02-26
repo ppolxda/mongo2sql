@@ -13,6 +13,7 @@ import org.mquery.MQueryError;
 import org.mquery.MongoCmd;
 import org.mquery.MongoDefine;
 import org.mquery.Pair;
+import org.mquery.SqlParames;
 
 public class CmdFactoryBase implements CmdFactory {
 
@@ -28,6 +29,8 @@ public class CmdFactoryBase implements CmdFactory {
     // }
     // return false;
     // }
+
+    public static SqlParames sqDefault = new SqlParames();
 
     public boolean isErrorOpType(JSONObject jsonObject) {
         final Set<String> keys = jsonObject.keySet();
@@ -150,11 +153,8 @@ public class CmdFactoryBase implements CmdFactory {
         }
     }
 
-    public String fmtField(String name) {
-        return name;
+    public SqlParames getSqlDefault() {
+        return CmdFactoryBase.sqDefault;
     }
 
-    public String fmtValue(Object value) {
-        return "'".concat(value.toString()).concat("'");
-    }
 }

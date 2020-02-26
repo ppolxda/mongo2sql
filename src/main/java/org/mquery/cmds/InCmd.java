@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 
 import org.mquery.MongoCmd;
 import org.mquery.MongoDefine;
+import org.mquery.SqlParames;
 
 public class InCmd implements MongoCmd {
 
@@ -27,15 +28,17 @@ public class InCmd implements MongoCmd {
         return MongoDefine.C_IN;
     }
 
-    public String evaluate() {
-        return "";
+    public String evaluate(SqlParames p) {
+        String[] datas = this.data.stream().map((Object obj) -> {
+            return p.fmtValue(obj.toString());
+        }).toArray(String[]::new);
+        return p.fmtField(this.field).concat(this.getJoinName()).concat(String.join(",", datas)).concat(")");
     }
 
     public String str() {
-        String[] datas = this.data.stream().map((Object obj) -> {
-            return this.cf.fmtValue(obj.toString());
-        }).toArray(String[]::new);
-        return this.cf.fmtField(this.field).concat(this.getJoinName()).concat(String.join(",", datas)).concat(")");
+        SqlParames p = this.cf.getSqlDefault();
+        return this.evaluate(p);
+
     }
 
 }

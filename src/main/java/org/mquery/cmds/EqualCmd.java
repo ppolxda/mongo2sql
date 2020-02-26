@@ -2,6 +2,7 @@ package org.mquery.cmds;
 
 import org.mquery.MongoCmd;
 import org.mquery.MongoDefine;
+import org.mquery.SqlParames;
 
 public class EqualCmd implements MongoCmd {
 
@@ -25,12 +26,13 @@ public class EqualCmd implements MongoCmd {
         return MongoDefine.C_EQ;
     }
 
-    public String evaluate() {
-        return "";
+    public String evaluate(SqlParames p) {
+        return String.join(this.getJoinName(), p.fmtField(this.field), p.fmtValue(this.data));
     }
 
     public String str() {
-        return String.join(this.getJoinName(), this.cf.fmtField(this.field), this.cf.fmtValue(this.data));
+        SqlParames p = this.cf.getSqlDefault();
+        return this.evaluate(p);
     }
 
 }

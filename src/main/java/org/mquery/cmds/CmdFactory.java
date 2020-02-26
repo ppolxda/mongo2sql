@@ -3,7 +3,7 @@ package org.mquery.cmds;
 import com.alibaba.fastjson.JSONObject;
 
 import org.mquery.MongoCmd;
-// import org.mquery.MongoDefine;
+import org.mquery.SqlParames;
 
 public interface CmdFactory {
 
@@ -11,7 +11,5 @@ public interface CmdFactory {
 
     public MongoCmd create(JSONObject obj);
 
-    public String fmtField(String name);
-
-    public String fmtValue(Object value);
+    public SqlParames getSqlDefault();
 }
