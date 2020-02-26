@@ -141,13 +141,17 @@ public class CmdFactoryBase implements CmdFactory {
             return new NotEqualCmd(field, obj, this);
         } else if (cmd.equals(MongoDefine.C_NIN)) {
             return new NotInCmd(field, obj, this);
+        } else if (cmd.equals(MongoDefine.C_LIKE)) {
+            return new LileCmd(field, obj, this);
+        } else if (cmd.equals(MongoDefine.C_BETWEEN)) {
+            return new BetweenCmd(field, obj, this);
         } else {
             return new EqualCmd(field, obj, this);
         }
     }
 
     public String fmtField(String name) {
-        return "\"".concat(name).concat("\"");
+        return name;
     }
 
     public String fmtValue(Object value) {
