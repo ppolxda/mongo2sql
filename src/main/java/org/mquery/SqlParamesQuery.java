@@ -13,6 +13,10 @@ public class SqlParamesQuery extends SqlParames {
     private Map<String, String> fields;
     private Map<String, String> parames = new HashMap<String, String>();
 
+    public SqlParamesQuery() {
+        this.fields = new HashMap<String, String>();
+    }
+
     public SqlParamesQuery(Map<String, String> fields) {
         this.fields = fields;
     }
